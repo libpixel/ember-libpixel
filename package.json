@@ -22,12 +22,15 @@
   },
   "dependencies": {
     "ember-cli-babel": "^7.11.1",
-    "ember-cli-htmlbars": "^4.0.0"
+    "ember-cli-htmlbars": "^4.0.0",
+    "ember-get-config": "^0.2.4",
+    "jssha": "^2.3.1"
   },
   "devDependencies": {
     "@ember/optional-features": "^1.0.0",
     "babel-eslint": "^10.0.3",
     "broccoli-asset-rev": "^3.0.0",
+    "ember-auto-import": "^1.5.3",
     "ember-cli": "~3.13.1",
     "ember-cli-dependency-checker": "^3.1.0",
     "ember-cli-eslint": "^5.1.0",
