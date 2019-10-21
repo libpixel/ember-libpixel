@@ -1,20 +1,19 @@
 import Service from '@ember/service';
 import { readOnly } from '@ember/object/computed';
 import config from 'ember-get-config';
-import jsSHA from 'jssha';
+import jsSHA from 'jsSHA';
 
 export default Service.extend({
   host: readOnly('config.host'),
   domain: readOnly('config.domain'),
   defaultSource: readOnly('config.defaultSource'),
-  secret: readOnly('config.secret'),
-  https: readOnly('config.https'),
+  secret: null,
+  https: false,
 
   didConfigure: false,
 
   init() {
     this._super(...arguments);
-
     this.configure();
   },
 
@@ -39,6 +38,18 @@ export default Service.extend({
     
     options = options || {};
 
+    let source, https = undefined;
+
+    if (options.hasOwnProperty('source')) {
+      source = options['source'];
+      delete options['source'];
+    }
+
+    if (options.hasOwnProperty('https')) {
+      https = options['https'];
+      delete options['https'];
+    }
+
     let escapedOptions = [];
 
     for (var key in options) {
@@ -48,14 +59,20 @@ export default Service.extend({
     }
 
     let qs = escapedOptions.join("&");
-    let url = this.https ? "https" : "http";
+    let url = '';
+
+    if (https) {
+      url += 'https';
+    } else {
+      url += this.https ? "https" : "http";
+    }
 
     url += this.baseUrl();
  
     url += "/";
 
-    if (options.hasOwnProperty('source')) {
-      url += options['source'];
+    if (source) {
+      url += source;
     } else if (this.defaultSource) {
       url += this.defaultSource;
     }
@@ -74,29 +91,33 @@ export default Service.extend({
   },
 
   sign(url) {
-    var parts = url.match(/^(.+?\/\/[^\/]+)(\/[^#]*)(#.*)?$/); // eslint-disable-line no-useless-escape
-    var sign = parts[2];
-
-    if (sign[sign.length-1] === "?") {
-      sign = sign.slice(0, -1);
+    if (this.secret) {
+      var parts = url.match(/^(.+?\/\/[^\/]+)(\/[^#]*)(#.*)?$/); // eslint-disable-line no-useless-escape
+      var sign = parts[2];
+  
+      if (sign[sign.length-1] === "?") {
+        sign = sign.slice(0, -1);
+      }
+  
+      var separator = "?";
+      if (sign.indexOf("?") > 0) {
+        separator = "&";
+      }
+  
+      var signer = new jsSHA("SHA-1", "TEXT");
+      signer.setHMACKey(this.secret, "TEXT");
+      signer.update(sign);
+      var hmac = signer.getHMAC("HEX");
+  
+      url = parts[1] + sign + separator + "signature=" + hmac;
+  
+      if (parts[3]) {
+        url += parts[3];
+      }
+  
+      return url;
+    } else {
+      return url;
     }
-
-    var separator = "?";
-    if (sign.indexOf("?") > 0) {
-      separator = "&";
-    }
-
-    var signer = new jsSHA("SHA-1", "TEXT");
-    signer.setHMACKey(this.secret, "TEXT");
-    signer.update(sign);
-    var hmac = signer.getHMAC("HEX");
-
-    url = parts[1] + sign + separator + "signature=" + hmac;
-
-    if (parts[3]) {
-      url += parts[3];
-    }
-
-    return url;
   }
 });

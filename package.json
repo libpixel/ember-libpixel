@@ -1,13 +1,17 @@
 {
   "name": "ember-libpixel",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "1.0.0",
+  "description": "Ember service for LibPixel image processing infrastructure",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "libpixel",
+    "image",
+    "processing",
+    "service"
   ],
-  "repository": "",
+  "repository": "https://github.com/libpixel/ember-libpixel",
   "license": "MIT",
-  "author": "",
+  "author": "Lauri Jutila <lauri@libpixel.com>",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -57,6 +61,7 @@
     "node": "8.* || >= 10.*"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "before": "ember-libpixel-modifier"
   }
 }
