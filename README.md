@@ -67,15 +67,13 @@ Usage
 
 `ember-libpixel` is a building block and a service interface for LibPixel. To
 actually start using LibPixel and harness the power of image processing in
-your app, you need one of the following add-ons:
+your app, you need the following add-on:
 
 * [ember-libpixel-modifier](https://github.com/libpixel/ember-libpixel-modifier)
   LibPixel element modifier for `img` tags in your templates
-* [ember-libpixel-image](https://github.com/libpixel/ember-libpixel-image)
-  An image component that you can use to replace your `img` tags and extend
 
-[LibPixel Guides](https://libpixel.com/guides/) host examples, tutorials and
-walkthroughs on how to use these add-ons in your Ember apps.
+[LibPixel Documentation](https://docs.libpixel.com/) hosts examples, tutorials and
+walkthroughs on how to use the add-on in your Ember apps.
 
 
 Contributing
