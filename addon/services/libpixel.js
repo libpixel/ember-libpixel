@@ -18,7 +18,7 @@ export default Service.extend({
   },
 
   configure() {
-    this.config = config.libpixel;
+    this.set('config', config.libpixel);
     this.didConfigure = true;
   },
 
