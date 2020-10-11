@@ -1,5 +1,5 @@
 {
-  "name": "ember-libpixel",
+  "name": "@libpixel/ember-libpixel",
   "version": "1.1.0",
   "description": "Ember service for LibPixel image processing infrastructure",
   "keywords": [
@@ -9,11 +9,13 @@
     "processing",
     "service"
   ],
-  "repository": "https://github.com/libpixel/ember-libpixel",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/libpixel/ember-libpixel.git"
+  },
   "license": "MIT",
   "author": "Lauri Jutila <lauri@libpixel.com>",
   "directories": {
-    "doc": "doc",
     "test": "tests"
   },
   "scripts": {
@@ -62,5 +64,10 @@
   "ember-addon": {
     "configPath": "tests/dummy/config",
     "before": "ember-libpixel-modifier"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/libpixel/ember-libpixel/issues"
+  },
+  "homepage": "https://github.com/libpixel/ember-libpixel#readme",
+  "main": "index.js"
 }
